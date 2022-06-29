@@ -34,6 +34,7 @@ class App {
   fileInputChange = (event: Event) => {
     const file = (event.target as HTMLInputElement).files![0];
     const reader = new FileReader();
+    // * file upload를 이런식으로 하면 불편하다 (다른 방식이 있다)
     reader.addEventListener("load", this.fileReaderLoad);
     reader.readAsDataURL(file);
   };
@@ -50,26 +51,6 @@ class App {
     this.canvas.width = image.width;
     this.canvas.height = image.height;
     this.context.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
-
-    // const imageData = this.context.getImageData(
-    //   0,
-    //   0,
-    //   this.canvas.width,
-    //   this.canvas.height
-    // );
-    // const data = imageData.data;
-    // const ascii = " .:+*#%@";
-    // for (let i = 0; i < data.length; i += 4) {
-    //   const r = data[i];
-    //   const g = data[i + 1];
-    //   const b = data[i + 2];
-    //   const gray = Math.floor(r * 0.3 + g * 0.59 + b * 0.11);
-    //   const index = Math.floor((gray / 255) * (ascii.length - 1));
-    //   data[i] = ascii.charCodeAt(index);
-    //   data[i + 1] = ascii.charCodeAt(index);
-    //   data[i + 2] = ascii.charCodeAt(index);
-    // }
-    // this.context.putImageData(imageData, 0, 0);
   };
 }
 
