@@ -47,10 +47,43 @@ class App {
 
   imageLoad = (event: Event) => {
     const image = event.target as HTMLImageElement;
-    // 이미지 비율 유지
-    this.canvas.width = image.width;
-    this.canvas.height = image.height;
+
+    // 이미지 비율 50% 축소
+    this.canvas.width = image.width / 2;
+    this.canvas.height = image.height / 2;
     this.context.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
+
+    const toGrayScale = (r: number, g: number, b: number) =>
+      0.21 * r + 0.72 * g + 0.07 * b;
+
+    const convertToGrayScales = (
+      context: CanvasRenderingContext2D,
+      width: number,
+      height: number
+    ) => {
+      const imageData = context.getImageData(0, 0, width, height);
+
+      const grayScales = [];
+
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const r = imageData.data[i];
+        const g = imageData.data[i + 1];
+        const b = imageData.data[i + 2];
+
+        const grayScale = toGrayScale(r, g, b);
+        imageData.data[i] =
+          imageData.data[i + 1] =
+          imageData.data[i + 2] =
+            grayScale;
+
+        grayScales.push(grayScale);
+      }
+
+      context.putImageData(imageData, 0, 0);
+
+      return grayScales;
+    };
+    convertToGrayScales(this.context, this.canvas.width, this.canvas.height);
   };
 }
 
