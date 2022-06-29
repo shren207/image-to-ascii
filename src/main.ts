@@ -46,6 +46,7 @@ class App {
 
   imageLoad = (event: Event) => {
     const image = event.target as HTMLImageElement;
+    // 이미지 비율 유지
     this.canvas.width = image.width;
     this.canvas.height = image.height;
     this.context.drawImage(image, 0, 0, this.canvas.width, this.canvas.height);
