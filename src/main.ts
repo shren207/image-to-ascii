@@ -10,6 +10,8 @@ app.innerHTML = `
   <canvas></canvas>
 `;
 
+// const grayScale = `$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'.`;
+
 class App {
   static instance: App;
 
@@ -62,10 +64,14 @@ class App {
       height: number
     ) => {
       const imageData = context.getImageData(0, 0, width, height);
+      // 이러면 imageData를 픽셀로 조회가능함
+      console.log(imageData);
 
       const grayScales = [];
 
       for (let i = 0; i < imageData.data.length; i += 4) {
+        // ImageData.data의 3의 배수 index는 필요없는듯 => 0 ~ 2 배수 값만 필요로 하고 있음
+        // 3의 배수의 값들은 전부 255로 나옴
         const r = imageData.data[i];
         const g = imageData.data[i + 1];
         const b = imageData.data[i + 2];
@@ -75,7 +81,6 @@ class App {
           imageData.data[i + 1] =
           imageData.data[i + 2] =
             grayScale;
-
         grayScales.push(grayScale);
       }
 
