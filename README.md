@@ -1,5 +1,4 @@
-# image to ascii (254)
-> lenna를 ascii art로 변환해보자.
+# image to ascii 
 
 <img width="662" alt="스크린샷 2022-06-30 오후 7 20 44" src="https://user-images.githubusercontent.com/85833148/176654254-4ccb1b21-bec2-4203-bcb2-504f9e99dee3.png">
 
