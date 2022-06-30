@@ -1,5 +1,5 @@
 import "./style.css";
-import "./AsciiArt.ts";
+import "./AsciiArt.ts"; //￼https://stackoverflow.com/questions/42251503/javascript-es6-import-without-a-name
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
@@ -10,8 +10,6 @@ app.innerHTML = `
 <!--  </p>    -->
 <!--  <canvas></canvas>-->
 `;
-
-// const grayScale = `$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'.`;
 
 // class App {
 //   static instance: App;

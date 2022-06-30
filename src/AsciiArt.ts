@@ -3,79 +3,92 @@ import lenna from "/lenna.png";
 // * 따로 파일 업로드하지 않으며, local 에 있는 파일 사용
 
 const MAX_MAGNITUDE = Math.sqrt(255 * 255 + 255 * 255 + 255 * 255);
-// vector = magnitude 와 direction 을 가지는 객체
 
-// const SHADES = [" ", ".", "-", "=", "+", "*", "%", "#", "@"];
-const SHADES = [
-  ".",
-  "'",
-  "`",
-  "^",
-  '"',
-  ",",
-  ":",
-  ";",
-  "I",
-  "l",
-  "!",
-  "i",
-  ">",
-  "<",
-  "~",
-  "+",
-  "_",
-  "-",
-  "?",
-  "]",
-  "[",
-  "}",
-  "{",
-  "1",
-  ")",
-  "(",
-  "|",
-  "/",
-  "t",
-  "f",
-  "j",
-  "r",
-  "x",
-  "n",
-  "u",
-  "v",
-  "c",
-  "z",
-  "X",
-  "Y",
-  "U",
-  "J",
-  "C",
-  "L",
-  "Q",
-  "0",
-  "O",
-  "Z",
-  "m",
-  "w",
-  "q",
-  "p",
-  "d",
-  "b",
-  "k",
-  "h",
-  "a",
-  "o",
-  "*",
-  "#",
-  "M",
-  "W",
-  "&",
-  "8",
-  "%",
-  "B",
-  "@",
-  "$",
-];
+const SHADES = [" ", ".", "-", "=", "+", "*", "%", "#", "@"];
+// const SHADES = [
+//   ".",
+//   "'",
+//   "`",
+//   "^",
+//   '"',
+//   ",",
+//   ":",
+//   ";",
+//   "I",
+//   "l",
+//   "!",
+//   "i",
+//   ">",
+//   "<",
+//   "~",
+//   "+",
+//   "_",
+//   "-",
+//   "?",
+//   "]",
+//   "[",
+//   "}",
+//   "{",
+//   "1",
+//   ")",
+//   "(",
+//   "|",
+//   "/",
+//   "t",
+//   "f",
+//   "j",
+//   "r",
+//   "x",
+//   "n",
+//   "u",
+//   "v",
+//   "c",
+//   "z",
+//   "X",
+//   "Y",
+//   "U",
+//   "J",
+//   "C",
+//   "L",
+//   "Q",
+//   "0",
+//   "O",
+//   "Z",
+//   "m",
+//   "w",
+//   "q",
+//   "p",
+//   "d",
+//   "b",
+//   "k",
+//   "h",
+//   "a",
+//   "o",
+//   "*",
+//   "#",
+//   "M",
+//   "W",
+//   "&",
+//   "8",
+//   "%",
+//   "B",
+//   "@",
+//   "$",
+// ];
+
+/*
+? [잘 모르겠는 부분]
+1. magnitude, intensity  쓰임
+2. context.measureText 메서드를 호출하는 이유
+3. cursor 값을 도출하는 formula가 왜 저런 구조인지
+ */
+
+/*
+! [이해한 부분]
+1. new Image()의 쓰임 => HTMLImageElement
+2. naming 없이 import 하는 경우
+3. ctx.getImageData.data 값 (Uint8ClampedArray)
+ */
 
 class AsciiArt {
   public static fromURL(rawurl: string) {
@@ -92,7 +105,7 @@ class AsciiArt {
     this.canvas = document.createElement("canvas"); // 타입 추론이 되기 때문에 타입 명시 생략 가능
     this.context = this.canvas.getContext("2d")!; // 타입 추론이 되기 때문에 타입 명시 생략 가능
 
-    document.body.append(this.canvas); // * <div id="app"></div> 에 append하시지 않고 body에 append하셨다.
+    document.body.append(this.canvas); // * <div id="app"></div> 에 append 않고 body에다 append
     image.addEventListener("load", () => {
       // * canvas의 width, height를 image의 width, height로 설정 => canvas 동적으로 결정됨
       this.canvas.width = image.width;
@@ -116,7 +129,8 @@ class AsciiArt {
     // * 4n : R, 4n+1 : G, 4n+2 : B, 4n+3 : A
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // * 더 이상 이미지는 필요 없으므로 canvas에서 지움
 
-    const fontSize = 9; // * fontSize가 적은 값일수록 Ascii Art가 더 정교하게 출력됨
+    const fontSize = 14;
+    // * fontSize가 적은 값일수록 Ascii Art가 더 정교하게 출력 (originalValue = 12)
 
     this.context.font = `${fontSize}px Monaco`; // * https://fontsgeek.com/monaco-font => monaco font 사용
     this.context.textBaseline = "top"; // * https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/textBaseline (예시 이미지 존재)
@@ -125,8 +139,8 @@ class AsciiArt {
     const { width: textWidth } = this.context.measureText("A"); // ? measureText가 왜 필요한 거지?
     // console.log(textWidth); // * 6.0009765625 pixels
 
-    const row = (this.canvas.width / fontSize) * 30; // * row의 크기만큼 loop가 돌아가기 때문에, 값이 커질수록 Ascii Art가 더 정교하게 출력됨
-    const col = (this.canvas.height / textWidth) * 30; // * column의 크기만큼 loop가 돌아가기 때문에, 값이 커질수록 Ascii Art가 더 정교하게 출력됨
+    const row = (this.canvas.width / fontSize) * 1.5; // * row의 크기만큼 loop가 돌아가기 때문에, 값이 커질수록 Ascii Art가 더 정교하게 출력됨
+    const col = (this.canvas.height / textWidth) * 1.5; // * column의 크기만큼 loop가 돌아가기 때문에, 값이 커질수록 Ascii Art가 더 정교하게 출력됨
     const width = this.canvas.width / col;
     const height = this.canvas.width / row;
 
