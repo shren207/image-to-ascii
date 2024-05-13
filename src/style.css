@@ -10,3 +10,13 @@ body {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+canvas {
+  margin: 0 auto;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

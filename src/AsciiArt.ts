@@ -105,8 +105,13 @@ class AsciiArt {
     this.canvas = document.createElement("canvas"); // 타입 추론이 되기 때문에 타입 명시 생략 가능
     this.context = this.canvas.getContext("2d")!; // 타입 추론이 되기 때문에 타입 명시 생략 가능
 
-    document.body.append(this.canvas); // * <div id="app"></div> 에 append 않고 body에다 append
     image.addEventListener("load", () => {
+      const wrapper = document.createElement("div");
+      wrapper.insertAdjacentElement("beforeend", this.canvas);
+      wrapper.classList.add("wrapper");
+      document.body.append(wrapper); // * <div id="app"></div> 에 append 않고 body에다 append
+
+      // document.body.append(this.canvas); // * <div id="app"></div> 에 append 않고 body에다 append
       // * canvas의 width, height를 image의 width, height로 설정 => canvas 동적으로 결정됨
       this.canvas.width = image.width;
       this.canvas.height = image.height;
